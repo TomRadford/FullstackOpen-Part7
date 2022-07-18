@@ -45,6 +45,17 @@ const Blog = () => {
             )
         )
     }
+
+    const handleComment = async (e) => {
+        e.preventDefault()
+        const comment = {
+            message: e.target.message.value,
+        }
+        const newComment = await blogService.createComment(blog.id, comment)
+        e.target.message.value = ''
+        setBlog({ ...blog, comments: blog.comments.concat(newComment) })
+    }
+
     if (!blog) return null
     return (
         <div>
@@ -59,6 +70,16 @@ const Blog = () => {
                 </button>
                 <p>added by {blog.user.name}</p>
                 <button onClick={handleDeleteBlog}>remove</button>
+                <h2>comments</h2>
+                <form onSubmit={handleComment}>
+                    <input id="message" type="text"></input>
+                    <button type="submit">add comment</button>
+                </form>
+                <ul>
+                    {blog.comments.map((comment) => (
+                        <li key={comment.id}>{comment.message}</li>
+                    ))}
+                </ul>
             </div>
         </div>
     )
