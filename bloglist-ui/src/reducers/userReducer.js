@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import userService from '../services/users'
 import { setNotification } from './notificationReducer'
-import { useNavigate } from 'react-router-dom'
+import { initializeBlogs } from '../reducers/blogReducer'
 
 const handleError = (dispatch, exception) => {
     dispatch(
         setNotification(
             {
-                message: 'Wrong username or password',
+                message: exception.response.data.error,
                 type: 'error',
             },
-            1000
+            2000
         )
     )
 }
@@ -31,7 +32,7 @@ const userSlice = createSlice({
 
 export const { setUser, clearUser } = userSlice.actions
 
-export const userLogin = (username, password) => {
+export const userLogin = (username, password, setError) => {
     return async (dispatch) => {
         try {
             const user = await loginService.login({
@@ -45,7 +46,44 @@ export const userLogin = (username, password) => {
                 JSON.stringify(user)
             )
             dispatch(setUser(user))
+            dispatch(initializeBlogs())
         } catch (exception) {
+            setError(true)
+            handleError(dispatch, exception)
+        }
+    }
+}
+
+export const userCreate = (
+    username,
+    password,
+    name,
+    setError,
+    setShowRegister
+) => {
+    return async (dispatch) => {
+        try {
+            await userService.create({
+                username,
+                password,
+                name,
+            })
+
+            const user = await loginService.login({
+                username,
+                password,
+            })
+
+            blogService.setToken(user.token)
+            window.localStorage.setItem(
+                'loggedBlogAppUser',
+                JSON.stringify(user)
+            )
+            dispatch(setUser(user))
+            dispatch(initializeBlogs())
+            setShowRegister(false)
+        } catch (exception) {
+            setError(true)
             handleError(dispatch, exception)
         }
     }

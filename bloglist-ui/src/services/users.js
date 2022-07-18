@@ -13,7 +13,7 @@ const getUser = async (id) => {
 }
 
 const create = async (userObject) => {
-    const res = await axios.post(baseUrl)
+    const res = await axios.post(baseUrl, userObject)
     return res.data
 }
 

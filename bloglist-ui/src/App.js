@@ -9,6 +9,8 @@ import Blog from './components/Pages/Blog'
 import UserList from './components/Pages/UserList'
 import User from './components/Pages/User'
 
+import { MantineProvider } from '@mantine/core'
+
 import { initializeBlogs } from './reducers/blogReducer'
 import { restoreUser } from './reducers/userReducer'
 import { setNotification } from './reducers/notificationReducer'
@@ -40,16 +42,18 @@ const App = () => {
     }, [])
 
     return (
-        <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Login />} />
-                <Route path="blogs" element={<BlogList />} />
-                <Route path="blogs/:blogId" element={<Blog />} />
-                <Route path="users" element={<UserList />} />
-                <Route path="users/:userId" element={<User />} />
-                <Route path="*" element={<div>404</div>} />
-            </Route>
-        </Routes>
+        <MantineProvider>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Login />} />
+                    <Route path="blogs" element={<BlogList />} />
+                    <Route path="blogs/:blogId" element={<Blog />} />
+                    <Route path="users" element={<UserList />} />
+                    <Route path="users/:userId" element={<User />} />
+                    <Route path="*" element={<div>404</div>} />
+                </Route>
+            </Routes>
+        </MantineProvider>
     )
 }
 
