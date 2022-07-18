@@ -1,17 +1,29 @@
+/* eslint-env node */
 module.exports = {
   env: {
-    commonjs: true,
-    es2021: true,
-    node: true,
-    jest: true,
+    browser: true,
+    es6: true,
+    "jest/globals": true,
   },
-  extends: "eslint:recommended",
+  extends: ["plugin:prettier/recommended"],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2018,
+    sourceType: "module",
   },
+  plugins: ["jest", "prettier"],
   rules: {
-    "linebreak-style": ["error", "windows"],
-    quotes: ["error", "single"],
-    semi: ["error", "never"],
+    "prettier/prettier": "error",
+    // 'linebreak-style': [
+    //   'error',
+    //   'unix'
+    // ],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
 };

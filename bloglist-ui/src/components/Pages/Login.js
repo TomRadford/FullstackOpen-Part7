@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../reducers/userReducer'
+import { initializeBlogs } from '../../reducers/blogReducer'
+
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
