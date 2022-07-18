@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { setNotification } from './notificationReducer'
+import { useNavigate } from 'react-router-dom'
 
 const handleError = (dispatch, exception) => {
     dispatch(
@@ -59,6 +60,7 @@ export const restoreUser = (user) => {
 
 export const userLogout = () => {
     return async (dispatch) => {
+        window.location.pathname = '/'
         dispatch(clearUser())
         blogService.setToken(null)
         window.localStorage.removeItem('loggedBlogAppUser')

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import Blog from './Blog'
+import BlogItem from './BlogItem'
 
 const Blogs = () => {
     const blogs = useSelector(({ blogs }) => blogs)
@@ -7,7 +7,7 @@ const Blogs = () => {
     return (
         <>
             {blogs.map((blog) => (
-                <Blog key={blog.id} blog={blog} />
+                <BlogItem key={blog.id} blog={blog} />
             ))}
         </>
     )

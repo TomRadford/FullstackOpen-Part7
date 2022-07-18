@@ -5,11 +5,12 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Login from './components/Pages/Login'
 import BlogList from './components/Pages/BlogList'
+import Blog from './components/Pages/Blog'
 import UserList from './components/Pages/UserList'
 import User from './components/Pages/User'
 
 import { initializeBlogs } from './reducers/blogReducer'
-import { restoreUser, setUser } from './reducers/userReducer'
+import { restoreUser } from './reducers/userReducer'
 import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
                 <Route index element={<Login />} />
                 <Route path="blogs" element={<BlogList />} />
+                <Route path="blogs/:blogId" element={<Blog />} />
                 <Route path="users" element={<UserList />} />
                 <Route path="users/:userId" element={<User />} />
                 <Route path="*" element={<div>404</div>} />

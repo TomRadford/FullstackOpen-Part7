@@ -4,7 +4,7 @@ import userService from '../../services/users'
 import { Link } from 'react-router-dom'
 
 const User = () => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState(null)
     const { userId } = useParams()
 
     useEffect(() => {
