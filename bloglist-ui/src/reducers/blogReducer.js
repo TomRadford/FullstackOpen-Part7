@@ -47,7 +47,6 @@ const blogSlice = createSlice({
             const newBlogs = state.map((blog) =>
                 blog.id === newBlog.id ? newBlog : blog
             )
-            console.log(newBlogs)
             return sortBlogs(newBlogs)
         },
         appendBlog(state, action) {

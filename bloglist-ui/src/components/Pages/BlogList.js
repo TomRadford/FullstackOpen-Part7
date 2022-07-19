@@ -1,13 +1,14 @@
 import BlogForm from '../BlogForm/BlogForm'
 import Togglable from '../Togglable'
 import Blogs from '../Blogs/Blogs'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Title } from '@mantine/core'
 
 const BlogList = () => {
     return (
-        <div>
-            <h2>blogs list</h2>
+        <>
+            <Title order={2} mb={4} align="center">
+                Blog posts
+            </Title>
 
             <div>
                 <Togglable buttonLabel="new note">
@@ -17,7 +18,7 @@ const BlogList = () => {
                     <Blogs />
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 export default BlogList

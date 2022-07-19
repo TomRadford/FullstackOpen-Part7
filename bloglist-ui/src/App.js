@@ -11,7 +11,7 @@ import User from './components/Pages/User'
 
 import { MantineProvider } from '@mantine/core'
 
-import { initializeBlogs } from './reducers/blogReducer'
+import { initializeBlogs, setBlogs } from './reducers/blogReducer'
 import { restoreUser } from './reducers/userReducer'
 import { setNotification } from './reducers/notificationReducer'
 
@@ -27,6 +27,7 @@ const App = () => {
             dispatch(initializeBlogs())
         } else {
             if (window.location.pathname !== '/') {
+                dispatch(setBlogs([]))
                 navigate('/')
                 dispatch(
                     setNotification(

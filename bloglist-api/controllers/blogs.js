@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const { userExtractor } = require('../utils/middleware')
+const ogs = require('open-graph-scraper')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({}).populate('user', {
@@ -33,8 +34,14 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
     newBlog.user = request.user
     const user = request.user
     newBlog.likes = newBlog.likes ? newBlog.likes : 0
-    const blog = new Blog(newBlog)
+    try {
+        const ogResults = await ogs({ url: newBlog.url })
+        newBlog.ogImage = ogResults.result.ogImage.url
+    } catch {
+        newBlog.ogImage = null
+    }
 
+    const blog = new Blog(newBlog)
     const savedBlog = await blog.save()
     response.status(201).json(savedBlog)
     user.blogs = user.blogs.concat(savedBlog._id)

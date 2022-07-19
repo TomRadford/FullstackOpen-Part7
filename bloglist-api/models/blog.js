@@ -16,6 +16,7 @@ const blogSchema = new mongoose.Schema({
     author: String,
     url: String,
     likes: Number,
+    ogImage: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

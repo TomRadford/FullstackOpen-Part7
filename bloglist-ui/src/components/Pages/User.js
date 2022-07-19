@@ -12,7 +12,6 @@ const User = () => {
             setUser(res)
         })
     }, [])
-    console.log(user)
     if (!user) return null
     return (
         <div>

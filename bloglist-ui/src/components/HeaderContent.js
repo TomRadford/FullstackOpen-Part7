@@ -11,6 +11,7 @@ import {
 } from '@mantine/core'
 import { useState } from 'react'
 import Notification from './Notification'
+import { Link } from 'react-router-dom'
 
 const HeaderContent = () => {
     const [username, setUsername] = useState('')
@@ -34,9 +35,14 @@ const HeaderContent = () => {
     }
     return (
         <>
-            <Title order={3} align="center">
-                🌐 BlogListr
-            </Title>
+            <Link
+                to="/blogs"
+                style={{ textDecoration: 'none', color: 'black' }}
+            >
+                <Title order={3} align="center">
+                    &#127760; BlogListr
+                </Title>
+            </Link>
             <Text style={{ display: 'flex', alignItems: 'center' }} size="sm">
                 {user ? (
                     <>
@@ -44,7 +50,9 @@ const HeaderContent = () => {
                             smallerThan="sm"
                             styles={{ display: 'none' }}
                         >
-                            <Text mr={5}>{user.name} logged in </Text>
+                            <Text mr={5}>
+                                Hi <b>{user.name}</b>!
+                            </Text>
                         </MediaQuery>
                         <Button
                             type="submit"

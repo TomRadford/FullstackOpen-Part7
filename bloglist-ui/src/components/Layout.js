@@ -10,7 +10,7 @@ import {
     Navbar,
     Header,
     Footer,
-    Title,
+    Group,
     Text,
     MediaQuery,
     Burger,
@@ -56,7 +56,7 @@ const Layout = () => {
                             component="a"
                             href="https://github.com/TomRadford"
                         >
-                            Tom Radford
+                            Tom Radford &nbsp;
                         </Text>
                         ✨
                     </Text>
@@ -64,14 +64,7 @@ const Layout = () => {
             }
             header={
                 <Header height={70} p="md">
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'centre',
-                            justifyContent: 'space-between',
-                        }}
-                    >
+                    <Group position="apart">
                         <MediaQuery
                             largerThan="sm"
                             styles={{ display: 'none' }}
@@ -85,11 +78,11 @@ const Layout = () => {
                             />
                         </MediaQuery>
                         <HeaderContent />
-                    </div>
+                    </Group>
                 </Header>
             }
         >
-            <Container size="xs" px="xs">
+            <Container>
                 <Notification />
                 <Outlet />
             </Container>
