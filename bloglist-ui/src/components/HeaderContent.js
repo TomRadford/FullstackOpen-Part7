@@ -12,6 +12,7 @@ import {
 import { useState } from 'react'
 import Notification from './Notification'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderContent = () => {
     const [username, setUsername] = useState('')
@@ -19,9 +20,11 @@ const HeaderContent = () => {
     const [name, setName] = useState('')
     const [error, setError] = useState(false)
     const [showRegister, setShowRegister] = useState(false)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const handleLogout = () => {
         dispatch(userLogout())
+        navigate('/')
     }
     const user = useSelector(({ user }) => user)
     const handleSignup = async (event) => {

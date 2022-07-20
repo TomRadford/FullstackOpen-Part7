@@ -1,6 +1,8 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
 
+import { Group, Button, Text } from '@mantine/core'
+
 const Toggleable = forwardRef((props, ref) => {
     const [visible, setVisible] = useState(false)
     const showWhenVisible = { display: visible ? '' : 'none' }
@@ -15,12 +17,29 @@ const Toggleable = forwardRef((props, ref) => {
     return (
         <div>
             <div style={hideWhenVisible}>
-                <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+                <Button
+                    size="md"
+                    fullWidth
+                    variant="subtle"
+                    leftIcon={props.icon}
+                    mb="md"
+                    onClick={toggleVisibility}
+                >
+                    <Text>{props.buttonLabel}</Text>
+                </Button>
             </div>
 
             <div style={showWhenVisible}>
                 {props.children}
-                <button onClick={toggleVisibility}>cancel</button>
+                <Group m={5} position="center">
+                    <Button
+                        size="sm"
+                        variant="subtle"
+                        onClick={toggleVisibility}
+                    >
+                        Cancel
+                    </Button>
+                </Group>
             </div>
         </div>
     )

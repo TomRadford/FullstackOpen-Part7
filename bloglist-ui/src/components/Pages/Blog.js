@@ -16,23 +16,23 @@ const Blog = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        blogService.getBlog(blogId).then((res) => {
-            setBlog(res)
-            setLikes(res.likes)
+        blogService.getBlog(blogId).then(({ data }) => {
+            setBlog(data)
+            setLikes(data.likes)
         })
     }, [])
 
     useEffect(() => {
         if (blog) {
             if (likes > blog.likes) {
-                dispatch(updateBlog({ ...blog, likes }))
+                dispatch(updateBlog({ ...blog, likes }, navigate))
             }
         }
     }, [likes])
 
     const handleDeleteBlog = () => {
         if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-            dispatch(deleteBlog(blog))
+            dispatch(deleteBlog(blog, navigate))
         }
         navigate('/blogs')
         dispatch(
@@ -51,7 +51,9 @@ const Blog = () => {
         const comment = {
             message: e.target.message.value,
         }
-        const newComment = await blogService.createComment(blog.id, comment)
+        const newComment = await (
+            await blogService.createComment(blog.id, comment)
+        ).data
         e.target.message.value = ''
         setBlog({ ...blog, comments: blog.comments.concat(newComment) })
     }

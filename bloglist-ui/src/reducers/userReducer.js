@@ -4,6 +4,7 @@ import blogService from '../services/blogs'
 import userService from '../services/users'
 import { setNotification } from './notificationReducer'
 import { initializeBlogs } from '../reducers/blogReducer'
+import { Navigate } from 'react-router-dom'
 
 const handleError = (dispatch, exception) => {
     dispatch(
@@ -35,10 +36,11 @@ export const { setUser, clearUser } = userSlice.actions
 export const userLogin = (username, password, setError) => {
     return async (dispatch) => {
         try {
-            const user = await loginService.login({
+            const res = await loginService.login({
                 username,
                 password,
             })
+            const user = res.data
 
             blogService.setToken(user.token)
             window.localStorage.setItem(
@@ -69,10 +71,12 @@ export const userCreate = (
                 name,
             })
 
-            const user = await loginService.login({
+            const res = await loginService.login({
                 username,
                 password,
             })
+
+            const user = res.data
 
             blogService.setToken(user.token)
             window.localStorage.setItem(
@@ -98,7 +102,6 @@ export const restoreUser = (user) => {
 
 export const userLogout = () => {
     return async (dispatch) => {
-        window.location.pathname = '/'
         dispatch(clearUser())
         blogService.setToken(null)
         window.localStorage.removeItem('loggedBlogAppUser')

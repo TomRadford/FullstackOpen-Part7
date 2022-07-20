@@ -9,7 +9,7 @@ const User = () => {
 
     useEffect(() => {
         userService.getUser(userId).then((res) => {
-            setUser(res)
+            setUser(res.data)
         })
     }, [])
     if (!user) return null

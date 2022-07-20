@@ -15,7 +15,9 @@ module.exports = {
     },
     plugins: ['jest', 'prettier'],
     rules: {
-        'prettier/prettier': 'error',
+        'prettier/prettier': [ 'error', {
+            "endOfLine":"auto"
+        }]
         // 'linebreak-style': [
         //   'error',
         //   'unix'

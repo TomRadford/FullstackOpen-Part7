@@ -10,7 +10,7 @@ const sortBlogs = (blogs) => {
     })
 }
 
-const handleError = (dispatch, exception) => {
+const handleError = (dispatch, exception, navigate) => {
     if (exception.response.data.error === 'Provided token has expired') {
         dispatch(
             setNotification(
@@ -18,10 +18,11 @@ const handleError = (dispatch, exception) => {
                     message: 'User session has expired, please login again.',
                     type: 'error',
                 },
-                1000
+                2000
             )
         )
         dispatch(userLogout())
+        navigate('/')
     } else {
         dispatch(
             setNotification(
@@ -29,7 +30,7 @@ const handleError = (dispatch, exception) => {
                     message: 'Failed to create new blog post',
                     type: 'error',
                 },
-                1000
+                2000
             )
         )
     }
@@ -64,15 +65,17 @@ export const { setBlogs, appendBlog, removeBlog, updateBlogs } =
 
 export const initializeBlogs = () => {
     return async (dispath) => {
-        const blogs = await blogService.getAll()
+        const res = await blogService.getAll()
+        const blogs = res.data
         dispath(setBlogs(blogs))
     }
 }
 
-export const createBlog = (blogObject) => {
+export const createBlog = (blogObject, navigate) => {
     return async (dispatch) => {
         try {
-            const newBlog = await blogService.create(blogObject)
+            const res = await blogService.create(blogObject)
+            const newBlog = res.data
             dispatch(appendBlog(newBlog))
             dispatch(
                 setNotification(
@@ -80,33 +83,33 @@ export const createBlog = (blogObject) => {
                         message: `a new blog ${newBlog.title} by ${newBlog.author} has been added`,
                         type: 'info',
                     },
-                    1000
+                    2000
                 )
             )
         } catch (exception) {
-            handleError(dispatch, exception)
+            handleError(dispatch, exception, navigate)
         }
     }
 }
 
-export const deleteBlog = (blogObject) => {
+export const deleteBlog = (blogObject, navigate) => {
     return async (dispatch) => {
         try {
             await blogService.remove(blogObject)
             dispatch(removeBlog(blogObject))
         } catch (exception) {
-            handleError(dispatch, exception)
+            handleError(dispatch, exception, navigate)
         }
     }
 }
 
-export const updateBlog = (blogObject) => {
+export const updateBlog = (blogObject, navigate) => {
     return async (dispatch) => {
         try {
             await blogService.update(blogObject)
             dispatch(updateBlogs(blogObject))
         } catch (exception) {
-            handleError(dispatch, exception)
+            handleError(dispatch, exception, navigate)
         }
     }
 }

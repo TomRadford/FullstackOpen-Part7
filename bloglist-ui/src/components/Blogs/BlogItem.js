@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Card,
@@ -6,20 +7,39 @@ import {
     Badge,
     Button,
     Group,
-    Box,
     MediaQuery,
 } from '@mantine/core'
+import { ThumbUp } from 'tabler-icons-react'
+import { useDispatch } from 'react-redux'
+import { updateBlog } from '../../reducers/blogReducer'
+import { useNavigate } from 'react-router-dom'
 
 const BlogItem = ({ blog }) => {
+    const [likes, setLikes] = useState(blog.likes)
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (likes > blog.likes) {
+            dispatch(updateBlog({ ...blog, likes }, navigate))
+        }
+    }, [likes])
+
     return (
         <>
             <MediaQuery largerThan="xs" styles={{ width: 340, margin: 'auto' }}>
                 <Card shadow="sm" p="lg">
-                    <Card.Section>
-                        <Image src={blog.ogImage} />
+                    <Card.Section component={Link} to={`/blogs/${blog.id}`}>
+                        {blog.ogImage ? (
+                            <Image src={blog.ogImage} />
+                        ) : (
+                            <Image withPlaceholder height={200} />
+                        )}
                     </Card.Section>
                     <Group
                         position="apart"
+                        align="center"
                         style={{
                             marginTop: 5,
                         }}
@@ -32,23 +52,37 @@ const BlogItem = ({ blog }) => {
                         </Text>
 
                         <Link
-                            to={`/users/${blog.user.id}`}
                             style={{ textDecoration: 'none' }}
+                            to={`/users/${blog.user.id}`}
                         >
-                            <Badge color="blue" variant="light">
+                            <Badge
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                                color="green"
+                                variant="light"
+                            >
                                 {blog.user.name}
                             </Badge>
                         </Link>
+                        <Badge
+                            style={{
+                                cursor: 'pointer',
+                            }}
+                            color="orange"
+                            variant="light"
+                            onClick={() => setLikes(likes + 1)}
+                        >
+                            <Group position="center">
+                                <ThumbUp size={12} />
+                                <Text size="xs">{likes}</Text>
+                            </Group>
+                        </Badge>
                         <Link
                             to={`/blogs/${blog.id}`}
                             style={{ textDecoration: 'none' }}
                         >
-                            <Button
-                                variant="light"
-                                color="blue"
-                                fullWidth
-                                style={{ marginTop: 14 }}
-                            >
+                            <Button variant="light" color="blue" fullWidth>
                                 View
                             </Button>
                         </Link>

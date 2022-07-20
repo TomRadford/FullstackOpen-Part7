@@ -18,7 +18,7 @@ import { setNotification } from './reducers/notificationReducer'
 const App = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const user = useSelector(({ user }) => user)
+
     useEffect(() => {
         const userLocalStorage =
             window.localStorage.getItem('loggedBlogAppUser')

@@ -7,7 +7,7 @@ const UserList = () => {
 
     useEffect(() => {
         userService.getAll().then((res) => {
-            setUsers(res)
+            setUsers(res.data)
         })
     }, [])
 

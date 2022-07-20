@@ -15,9 +15,21 @@ import {
     MediaQuery,
     Burger,
     useMantineTheme,
-    Container,
 } from '@mantine/core'
 
+const BurgerHolder = ({ opened, user, theme, setOpened }) => {
+    if (user) {
+        return (
+            <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+            />
+        )
+    }
+}
 const Layout = () => {
     const theme = useMantineTheme()
     const [opened, setOpened] = useState(false)
@@ -38,12 +50,12 @@ const Layout = () => {
             navbar={
                 user && (
                     <Navbar
-                        p="md"
+                        p="xl"
                         hiddenBreakpoint="sm"
                         hidden={!opened}
-                        width={{ sm: 200, lg: 300 }}
+                        width={{ sm: 250, xl: 290 }}
                     >
-                        <NavigationContent />
+                        <NavigationContent setOpened={setOpened} />
                     </Navbar>
                 )
             }
@@ -56,9 +68,9 @@ const Layout = () => {
                             component="a"
                             href="https://github.com/TomRadford"
                         >
-                            Tom Radford &nbsp;
+                            Tom Radford
                         </Text>
-                        ✨
+                        &nbsp;✨
                     </Text>
                 </Footer>
             }
@@ -69,12 +81,11 @@ const Layout = () => {
                             largerThan="sm"
                             styles={{ display: 'none' }}
                         >
-                            <Burger
+                            <BurgerHolder
                                 opened={opened}
-                                onClick={() => setOpened((o) => !o)}
-                                size="sm"
-                                color={theme.colors.gray[6]}
-                                mr="xl"
+                                user={user}
+                                theme={theme}
+                                setOpened={setOpened}
                             />
                         </MediaQuery>
                         <HeaderContent />
@@ -82,10 +93,10 @@ const Layout = () => {
                 </Header>
             }
         >
-            <Container>
+            <div>
                 <Notification />
                 <Outlet />
-            </Container>
+            </div>
         </AppShell>
     )
 }
