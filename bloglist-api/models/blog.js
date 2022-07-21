@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
 
-const commentSchema = new mongoose.Schema({
-    message: String,
-})
+const commentSchema = new mongoose.Schema(
+    {
+        message: String,
+    },
+    { timestamps: true }
+)
 
 commentSchema.set('toJSON', {
     transform: (document, returnedObject) => {
