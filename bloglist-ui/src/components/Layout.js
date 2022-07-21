@@ -20,13 +20,15 @@ import {
 const BurgerHolder = ({ opened, user, theme, setOpened }) => {
     if (user) {
         return (
-            <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-            />
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                <Burger
+                    opened={opened}
+                    onClick={() => setOpened((o) => !o)}
+                    size="sm"
+                    color={theme.colors.gray[6]}
+                    mr="xl"
+                />
+            </MediaQuery>
         )
     }
 }
@@ -77,17 +79,13 @@ const Layout = () => {
             header={
                 <Header height={70} p="md">
                     <Group position="apart">
-                        <MediaQuery
-                            largerThan="sm"
-                            styles={{ display: 'none' }}
-                        >
-                            <BurgerHolder
-                                opened={opened}
-                                user={user}
-                                theme={theme}
-                                setOpened={setOpened}
-                            />
-                        </MediaQuery>
+                        <BurgerHolder
+                            opened={opened}
+                            user={user}
+                            theme={theme}
+                            setOpened={setOpened}
+                        />
+
                         <HeaderContent />
                     </Group>
                 </Header>
